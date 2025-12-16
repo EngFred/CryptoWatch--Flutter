@@ -11,7 +11,6 @@ import 'components/offline_banner.dart';
 
 class CryptoListScreen extends StatelessWidget {
   const CryptoListScreen({super.key});
-
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
@@ -23,7 +22,6 @@ class CryptoListScreen extends StatelessWidget {
 
 class _CryptoListScreenBody extends StatefulWidget {
   const _CryptoListScreenBody();
-
   @override
   State<_CryptoListScreenBody> createState() => _CryptoListScreenBodyState();
 }
@@ -31,7 +29,6 @@ class _CryptoListScreenBody extends StatefulWidget {
 class _CryptoListScreenBodyState extends State<_CryptoListScreenBody> {
   final TextEditingController _searchController = TextEditingController();
   late final PagingController<int, CryptoCoin> _pagingController;
-
   @override
   void initState() {
     super.initState();
@@ -113,7 +110,6 @@ class _CryptoListScreenBodyState extends State<_CryptoListScreenBody> {
                 ),
               ),
             ),
-
             // List
             Expanded(
               child: RefreshIndicator(
@@ -131,7 +127,10 @@ class _CryptoListScreenBodyState extends State<_CryptoListScreenBody> {
                           children: [
                             CryptoListItem(
                               coin: item,
-                              onTap: (id) => context.push('/detail/$id'),
+                              onTap: (id) {
+                                FocusManager.instance.primaryFocus?.unfocus();
+                                context.push('/detail/$id');
+                              },
                             ),
                             const Divider(height: 1, color: Colors.white24),
                           ],
