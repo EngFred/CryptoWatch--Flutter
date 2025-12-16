@@ -12,7 +12,7 @@ abstract class CryptoDao {
   Future<List<CryptoEntity>> getCoinsPage(int limit, int offset);
 
   @Query(
-    "SELECT * FROM coins WHERE name LIKE '%' || :query || '%' OR symbol LIKE '%' || :query || '%' ORDER BY marketCap DESC",
+    "SELECT * FROM coins WHERE LOWER(name) LIKE LOWER('%' || :query || '%') OR LOWER(symbol) LIKE LOWER('%' || :query || '%') ORDER BY marketCap DESC",
   )
   Future<List<CryptoEntity>> searchCoins(String query);
 

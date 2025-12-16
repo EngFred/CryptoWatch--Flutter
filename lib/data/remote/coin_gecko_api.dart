@@ -32,7 +32,6 @@ class CoinGeckoApi {
       final List<dynamic> data = response.data;
       return data.map((json) => CoinDto.fromJson(json)).toList();
     } catch (e) {
-      // Allow Repository to handle DioExceptions (404, 500, No Internet)
       rethrow;
     }
   }

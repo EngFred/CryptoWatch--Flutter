@@ -37,11 +37,15 @@ class _CryptoListScreenBodyState extends State<_CryptoListScreenBody> {
     super.initState();
     _pagingController = PagingController<int, CryptoCoin>(
       getNextPageKey: (state) {
+        final isSearch = _searchController.text.isNotEmpty;
         final pages = state.pages ?? [];
         if (pages.isEmpty) {
           return 1;
         }
-        final lastPageIsEmpty = pages.last.isEmpty; // Safe check
+        if (isSearch) {
+          return null;
+        }
+        final lastPageIsEmpty = pages.last.isEmpty;
         if (lastPageIsEmpty) {
           return null;
         }
@@ -93,8 +97,7 @@ class _CryptoListScreenBodyState extends State<_CryptoListScreenBody> {
                 onChanged: (val) {
                   // 3. Search Logic
                   context.read<CoinListBloc>().add(CoinListSearchChanged(val));
-                  _pagingController
-                      .refresh(); // Triggers page 1 load with new query
+                  _pagingController.refresh();
                 },
                 style: const TextStyle(color: Colors.white),
                 decoration: InputDecoration(
@@ -134,7 +137,6 @@ class _CryptoListScreenBodyState extends State<_CryptoListScreenBody> {
                           ],
                         ),
                         firstPageErrorIndicatorBuilder: (_) => Center(
-                          // Centered for better UX
                           child: const OfflineBanner(
                             message:
                                 "Failed to load data. Check internet connection.",

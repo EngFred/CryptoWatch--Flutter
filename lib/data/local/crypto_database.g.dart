@@ -156,7 +156,7 @@ class _$CryptoDao extends CryptoDao {
   @override
   Future<List<CryptoEntity>> searchCoins(String query) async {
     return _queryAdapter.queryList(
-        'SELECT * FROM coins WHERE name LIKE \'%\' || ?1 || \'%\' OR symbol LIKE \'%\' || ?1 || \'%\' ORDER BY marketCap DESC',
+        'SELECT * FROM coins WHERE LOWER(name) LIKE LOWER(\'%\' || ?1 || \'%\') OR LOWER(symbol) LIKE LOWER(\'%\' || ?1 || \'%\') ORDER BY marketCap DESC',
         mapper: (Map<String, Object?> row) => CryptoEntity(id: row['id'] as String, symbol: row['symbol'] as String, name: row['name'] as String, image: row['image'] as String, currentPrice: row['currentPrice'] as double, priceChangePercentage24h: row['priceChangePercentage24h'] as double, high24h: row['high24h'] as double, low24h: row['low24h'] as double, marketCap: row['marketCap'] as double, volume: row['volume'] as double, sparkline: row['sparkline'] as String, page: row['page'] as int),
         arguments: [query]);
   }
