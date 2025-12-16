@@ -7,13 +7,13 @@ import 'data/worker/background_worker.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  // 1. Initialize DI for the UI Thread
+  // Initialize DI for the UI Thread
   await configureDependencies();
 
-  // 2. Initialize WorkManager with our Isolate Entry Point
+  // Initialize WorkManager with Isolate Entry Point
   await Workmanager().initialize(callbackDispatcher);
 
-  // 3. Register the Periodic Task
+  // Register the Periodic Task
   await Workmanager().registerPeriodicTask(
     syncUniqueName,
     syncTaskName,
